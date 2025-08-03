@@ -279,9 +279,9 @@ class UltraCinemaAPITester:
         success, response = self.run_test(
             "Unauthorized Movie Creation",
             "POST",
-            "/api/admin/movies",
+            "/api/admin/filmler",
             401,
-            data={"title": "Test", "description": "Test", "genre": "Test", "release_year": 2024, "rating": 5.0}
+            data={"baslik": "Test", "aciklama": "Test", "tur": "Test", "yil": 2024, "puan": 5.0}
         )
         
         # Restore token
