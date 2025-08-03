@@ -123,6 +123,8 @@ class MovieUpdate(BaseModel):
     youtube_url: Optional[str] = None
     imdb_url: Optional[str] = None
     fragman_url: Optional[str] = None
+    kapak_resmi_url: Optional[str] = None
+    arkaplan_resmi_url: Optional[str] = None
     ozel: Optional[bool] = None
     premium: Optional[bool] = None
     yaş_siniri: Optional[str] = None
