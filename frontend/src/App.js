@@ -182,113 +182,115 @@ function VideoPlayer({ movie, onClose }) {
   );
 }
 
-// Movie Card Component
+// Ultra Modern Movie Card Component (424x326 dimensions)
 function MovieCard({ movie, isAdmin = false, onEdit, onDelete, onPlay }) {
   const kapakSrc = movie.kapak_resmi_url 
     ? movie.kapak_resmi_url
     : movie.kapak_resmi 
       ? `${API_BASE}/api/dosyalar/${movie.kapak_resmi}`
-      : `https://via.placeholder.com/400x600/1a1a1a/ffffff?text=${encodeURIComponent(movie.baslik)}`;
+      : `https://via.placeholder.com/424x326/1a1a1a/ffffff?text=${encodeURIComponent(movie.baslik)}`;
 
   return (
-    <Card className="group overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 border-gray-700 hover:border-red-500 transition-all duration-500 transform hover:scale-105 hover:shadow-2xl hover:shadow-red-500/20">
-      <div className="relative aspect-[2/3] overflow-hidden">
+    <Card className="group overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 border-gray-700/50 hover:border-red-500/70 transition-all duration-700 transform hover:scale-[1.02] hover:shadow-2xl hover:shadow-red-500/30 backdrop-blur-sm" style={{ width: '424px', height: '326px' }}>
+      <div className="relative w-full h-[200px] overflow-hidden rounded-t-lg">
         <img
           src={kapakSrc}
           alt={movie.baslik}
-          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 filter group-hover:brightness-110"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-        <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-60 transition-all duration-300 flex items-center justify-center">
+        
+        {/* Ultra Modern Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+        
+        {/* Glassmorphism Play Button */}
+        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500">
           <Button
             onClick={() => onPlay(movie)}
-            className="opacity-0 group-hover:opacity-100 transition-all duration-300 bg-red-600 hover:bg-red-700 transform scale-90 group-hover:scale-100"
+            className="bg-red-600/20 backdrop-blur-md border border-red-500/50 hover:bg-red-600/30 hover:border-red-400 text-white transform scale-90 group-hover:scale-100 transition-all duration-500 rounded-full w-16 h-16 p-0 shadow-lg shadow-red-500/25"
             size="lg"
           >
-            <Play className="mr-2" size={24} />
-            İzle
+            <Play className="ml-1" size={24} />
           </Button>
         </div>
+
+        {/* Ultra Modern Badges */}
         {movie.ozel && (
-          <Badge className="absolute top-3 right-3 bg-gradient-to-r from-red-600 to-red-700 text-white font-bold">
-            <Sparkles className="mr-1" size={16} />
+          <Badge className="absolute top-3 right-3 bg-gradient-to-r from-red-500 to-pink-600 text-white font-bold shadow-lg backdrop-blur-sm border-0 rounded-full">
+            <Sparkles className="mr-1" size={14} />
             Özel
           </Badge>
         )}
         {movie.premium && (
-          <Badge className="absolute top-3 left-3 bg-gradient-to-r from-yellow-600 to-yellow-700 text-white font-bold">
-            <Award className="mr-1" size={16} />
+          <Badge className="absolute top-3 left-3 bg-gradient-to-r from-amber-500 to-orange-600 text-white font-bold shadow-lg backdrop-blur-sm border-0 rounded-full">
+            <Award className="mr-1" size={14} />
             Premium
           </Badge>
         )}
+
+        {/* Modern Info Overlay */}
         <div className="absolute bottom-3 left-3 right-3">
-          <div className="flex items-center text-white text-sm space-x-2">
+          <div className="flex items-center text-white text-xs space-x-2">
             {movie.sure && (
-              <div className="flex items-center bg-black bg-opacity-50 rounded-full px-2 py-1">
-                <Clock size={12} className="mr-1" />
+              <div className="flex items-center bg-black/50 backdrop-blur-sm rounded-full px-3 py-1.5 border border-white/20">
+                <Clock size={10} className="mr-1.5" />
                 {movie.sure} dk
               </div>
             )}
-            <div className="flex items-center bg-black bg-opacity-50 rounded-full px-2 py-1">
-              <Calendar size={12} className="mr-1" />
+            <div className="flex items-center bg-black/50 backdrop-blur-sm rounded-full px-3 py-1.5 border border-white/20">
+              <Calendar size={10} className="mr-1.5" />
               {movie.yil}
+            </div>
+            <div className="flex items-center bg-black/50 backdrop-blur-sm rounded-full px-3 py-1.5 border border-white/20 ml-auto">
+              <Star className="text-yellow-400 mr-1" size={10} />
+              <span className="text-yellow-400 font-semibold text-xs">{movie.puan}</span>
             </div>
           </div>
         </div>
       </div>
-      <CardContent className="p-4 bg-gradient-to-br from-gray-900 to-gray-800">
-        <CardTitle className="text-white text-lg mb-2 truncate font-bold">{movie.baslik}</CardTitle>
-        <div className="flex items-center justify-between mb-3">
-          <div className="flex items-center">
-            <Star className="text-yellow-500 mr-1" size={16} />
-            <span className="text-yellow-500 font-semibold">{movie.puan}</span>
-          </div>
+
+      {/* Ultra Modern Content Section */}
+      <CardContent className="p-4 bg-gradient-to-br from-gray-900/95 via-gray-800/95 to-gray-900/95 backdrop-blur-sm h-[126px] flex flex-col justify-between">
+        <div>
+          <CardTitle className="text-white text-base mb-1 truncate font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+            {movie.baslik}
+          </CardTitle>
+          <p className="text-gray-400 text-xs line-clamp-2 leading-relaxed mb-2">
+            {movie.aciklama}
+          </p>
+        </div>
+        
+        <div className="flex items-center justify-between">
+          <Badge className="bg-gray-800/80 text-gray-300 hover:bg-red-600/20 hover:text-red-300 border border-gray-600/50 hover:border-red-500/50 transition-all duration-300 text-xs rounded-full">
+            {movie.tur}
+          </Badge>
+          
           {movie.yaş_siniri && (
-            <Badge variant="outline" className="text-xs border-gray-600 text-gray-300">
+            <Badge variant="outline" className="text-xs border-gray-600/50 text-gray-400 rounded-full">
               {movie.yaş_siniri}
             </Badge>
           )}
-        </div>
-        <Badge variant="outline" className="mb-2 border-red-500 text-red-400">{movie.tur}</Badge>
-        <p className="text-gray-400 text-sm line-clamp-2 mb-3">{movie.aciklama}</p>
-        
-        {movie.yonetmen && (
-          <div className="text-xs text-gray-500 mb-2">
-            <span className="font-semibold">Yönetmen:</span> {movie.yonetmen}
-          </div>
-        )}
-        
-        <div className="flex items-center space-x-2 mb-3">
-          {movie.youtube_url && (
-            <Badge className="bg-red-600 text-white text-xs">
-              <Youtube size={12} className="mr-1" />
-              YouTube
-            </Badge>
-          )}
-          {movie.video_url && (
-            <Badge className="bg-blue-600 text-white text-xs">
-              <ExternalLink size={12} className="mr-1" />
-              Link
-            </Badge>
-          )}
-          {movie.video_file && (
-            <Badge className="bg-green-600 text-white text-xs">
-              <Video size={12} className="mr-1" />
-              Dosya
-            </Badge>
-          )}
-        </div>
 
-        {isAdmin && (
-          <div className="flex gap-2 mt-4">
-            <Button size="sm" variant="outline" onClick={() => onEdit(movie)} className="border-blue-500 text-blue-400 hover:bg-blue-500 hover:text-white">
-              <Edit size={16} />
-            </Button>
-            <Button size="sm" variant="destructive" onClick={() => onDelete(movie.id)}>
-              <Trash2 size={16} />
-            </Button>
-          </div>
-        )}
+          {isAdmin && (
+            <div className="flex space-x-1">
+              <Button
+                onClick={() => onEdit(movie)}
+                size="sm"
+                variant="ghost"
+                className="text-blue-400 hover:text-blue-300 hover:bg-blue-400/10 rounded-full w-8 h-8 p-0"
+              >
+                <Edit size={14} />
+              </Button>
+              <Button
+                onClick={() => onDelete(movie.id)}
+                size="sm"
+                variant="ghost"
+                className="text-red-400 hover:text-red-300 hover:bg-red-400/10 rounded-full w-8 h-8 p-0"
+              >
+                <Trash2 size={14} />
+              </Button>
+            </div>
+          )}
+        </div>
       </CardContent>
     </Card>
   );
