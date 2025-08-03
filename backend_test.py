@@ -140,21 +140,21 @@ class UltraCinemaAPITester:
         return False
 
     def test_create_second_movie(self):
-        """Test creating a second movie"""
+        """Test creating a second movie without cover image URLs"""
         movie_data = {
-            "title": "The Matrix",
-            "description": "A computer hacker learns from mysterious rebels about the true nature of his reality and his role in the war against its controllers.",
-            "genre": "Action",
-            "release_year": 1999,
-            "rating": 8.7,
+            "baslik": "The Matrix",
+            "aciklama": "A computer hacker learns from mysterious rebels about the true nature of his reality and his role in the war against its controllers.",
+            "tur": "Aksiyon",
+            "yil": 1999,
+            "puan": 8.7,
             "video_url": "https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_2mb.mp4",
-            "featured": False
+            "ozel": False
         }
         
         success, response = self.run_test(
-            "Create Movie (The Matrix)",
+            "Create Movie without Cover Images (The Matrix)",
             "POST",
-            "/api/admin/movies",
+            "/api/admin/filmler",
             200,
             data=movie_data
         )
