@@ -77,8 +77,10 @@ class Movie(BaseModel):
     youtube_url: Optional[str] = None  # YouTube URL
     imdb_url: Optional[str] = None  # IMDB URL
     video_file: Optional[str] = None  # Uploaded video file
-    kapak_resmi: Optional[str] = None  # Cover image
-    arkaplan_resmi: Optional[str] = None  # Background image
+    kapak_resmi: Optional[str] = None  # Cover image file
+    kapak_resmi_url: Optional[str] = None  # Cover image URL
+    arkaplan_resmi: Optional[str] = None  # Background image file
+    arkaplan_resmi_url: Optional[str] = None  # Background image URL
     fragman_url: Optional[str] = None  # Trailer URL
     ozel: bool = False  # Featured
     premium: bool = False  # Premium content
