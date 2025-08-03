@@ -102,6 +102,8 @@ class MovieCreate(BaseModel):
     youtube_url: Optional[str] = None
     imdb_url: Optional[str] = None
     fragman_url: Optional[str] = None
+    kapak_resmi_url: Optional[str] = None  # Cover image URL
+    arkaplan_resmi_url: Optional[str] = None  # Background image URL
     ozel: bool = False
     premium: bool = False
     yaş_siniri: Optional[str] = None
