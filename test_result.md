@@ -118,6 +118,9 @@ backend:
         - working: true
           agent: "main"
           comment: "Backend already supported kapak_resmi_url and arkaplan_resmi_url fields in Movie model and API endpoints. No changes needed."
+        - working: true
+          agent: "testing"
+          comment: "COMPREHENSIVE TESTING COMPLETED: ✅ Movie creation with cover image URLs works perfectly - both kapak_resmi_url and arkaplan_resmi_url fields are properly saved and returned. ✅ Movie update functionality works correctly - can add, modify, and remove cover image URLs. ✅ Movie retrieval (both list and individual) properly returns cover image URLs. ✅ All API endpoints use correct /api prefix. ✅ Partial cover image support works (only kapak_resmi_url without arkaplan_resmi_url). ✅ Cover image URLs persist correctly in database. Only minor issue: unauthorized access returns 403 instead of 401, but this doesn't affect core functionality. 15/16 tests passed successfully."
 
 frontend:
   - task: "Add cover image URL input fields to movie form"
