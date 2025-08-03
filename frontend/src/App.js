@@ -807,8 +807,6 @@ function ImagePreview({ src, alt, className = "w-full h-48 object-cover rounded-
 
 // Enhanced File Upload Component with Drag & Drop
 function FileUploadSection({ movieId, onUploadComplete, isNewMovie = false }) {
-// Enhanced File Upload Component with Drag & Drop
-function FileUploadSection({ movieId, onUploadComplete, isNewMovie = false }) {
   const [uploading, setUploading] = useState({});
   const [dragStates, setDragStates] = useState({});
 
