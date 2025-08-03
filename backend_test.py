@@ -4,7 +4,7 @@ import json
 from datetime import datetime
 
 class UltraCinemaAPITester:
-    def __init__(self, base_url="https://d9ccd2eb-d0b0-46ef-9f77-cf41c068dc61.preview.emergentagent.com"):
+    def __init__(self, base_url="https://93bd627b-8b21-4b4b-85ee-2fd802164bec.preview.emergentagent.com"):
         self.base_url = base_url
         self.admin_token = None
         self.tests_run = 0
