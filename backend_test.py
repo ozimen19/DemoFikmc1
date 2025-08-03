@@ -297,8 +297,57 @@ class UltraCinemaAPITester:
         success, response = self.run_test(
             "Delete Movie",
             "DELETE",
-            f"/api/admin/movies/{self.created_movie_id}",
+            f"/api/admin/filmler/{self.created_movie_id}",
             200
+        )
+        return success
+
+    def test_create_movie_with_partial_images(self):
+        """Test creating a movie with only one cover image URL"""
+        movie_data = {
+            "baslik": "Interstellar",
+            "aciklama": "A team of explorers travel through a wormhole in space in an attempt to ensure humanity's survival.",
+            "tur": "Bilim Kurgu",
+            "yil": 2014,
+            "puan": 8.6,
+            "kapak_resmi_url": "https://m.media-amazon.com/images/M/MV5BZjdkOTU3MDktN2IxOS00OGEyLWFmMjktY2FiMmZkNWIyODZiXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg",
+            # Note: arkaplan_resmi_url is intentionally omitted
+            "ozel": False
+        }
+        
+        success, response = self.run_test(
+            "Create Movie with Partial Cover Images (Interstellar)",
+            "POST",
+            "/api/admin/filmler",
+            200,
+            data=movie_data
+        )
+        
+        if success and isinstance(response, dict):
+            if 'kapak_resmi_url' in response and response['kapak_resmi_url']:
+                print(f"   ✅ Cover image URL saved: {response['kapak_resmi_url']}")
+            if 'arkaplan_resmi_url' not in response or not response.get('arkaplan_resmi_url'):
+                print(f"   ✅ Background image URL correctly omitted")
+        
+        return success
+
+    def test_update_movie_remove_images(self):
+        """Test updating a movie to remove cover image URLs"""
+        if not self.created_movie_id:
+            print("⚠️  Skipping movie update test - no movie ID available")
+            return True
+            
+        update_data = {
+            "kapak_resmi_url": None,
+            "arkaplan_resmi_url": None
+        }
+        
+        success, response = self.run_test(
+            "Update Movie to Remove Cover Images",
+            "PUT",
+            f"/api/admin/filmler/{self.created_movie_id}",
+            200,
+            data=update_data
         )
         return success
 
