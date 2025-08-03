@@ -750,8 +750,63 @@ function AdminLogin() {
   );
 }
 
-// File Upload Component
-function FileUploadSection({ movieId, onUploadComplete }) {
+// Image Preview Component
+function ImagePreview({ src, alt, className = "w-full h-48 object-cover rounded-lg" }) {
+  const [imageError, setImageError] = useState(false);
+  const [imageLoading, setImageLoading] = useState(true);
+
+  const handleImageLoad = () => {
+    setImageLoading(false);
+    setImageError(false);
+  };
+
+  const handleImageError = () => {
+    setImageLoading(false);
+    setImageError(true);
+  };
+
+  if (!src) {
+    return (
+      <div className={`bg-gray-800 border-2 border-dashed border-gray-600 rounded-lg flex items-center justify-center ${className}`}>
+        <div className="text-center text-gray-400">
+          <Image size={48} className="mx-auto mb-2 opacity-50" />
+          <p className="text-sm">Resim önizlemesi</p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="relative">
+      {imageLoading && (
+        <div className={`bg-gray-800 border border-gray-600 rounded-lg flex items-center justify-center ${className}`}>
+          <div className="text-center text-gray-400">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-red-500 mx-auto mb-2"></div>
+            <p className="text-sm">Yükleniyor...</p>
+          </div>
+        </div>
+      )}
+      {imageError && (
+        <div className={`bg-gray-800 border border-red-500 rounded-lg flex items-center justify-center ${className}`}>
+          <div className="text-center text-red-400">
+            <X size={48} className="mx-auto mb-2 opacity-50" />
+            <p className="text-sm">Resim yüklenemedi</p>
+          </div>
+        </div>
+      )}
+      <img
+        src={src}
+        alt={alt}
+        className={`${className} ${imageLoading || imageError ? 'hidden' : 'block'} border border-gray-600`}
+        onLoad={handleImageLoad}
+        onError={handleImageError}
+      />
+    </div>
+  );
+}
+
+// Enhanced File Upload Component with Drag & Drop
+function FileUploadSection({ movieId, onUploadComplete, isNewMovie = false }) {
   const [uploading, setUploading] = useState({});
 
   const handleFileUpload = async (type, file) => {
