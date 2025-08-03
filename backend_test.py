@@ -228,9 +228,9 @@ class UltraCinemaAPITester:
     def test_search_movies_genre(self):
         """Test movie search by genre"""
         success, response = self.run_test(
-            "Search Movies (science fiction)",
+            "Search Movies (bilim kurgu)",
             "GET",
-            "/api/search?q=science%20fiction",
+            "/api/ara?q=bilim%20kurgu",
             200
         )
         return success
