@@ -89,7 +89,7 @@ class UltraCinemaAPITester:
         success, response = self.run_test(
             "Get Site Settings",
             "GET",
-            "/api/settings",
+            "/api/ayarlar",
             200
         )
         return success
