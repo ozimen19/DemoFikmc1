@@ -1390,7 +1390,85 @@ function AdminDashboard() {
                   placeholder="https://youtube.com/watch?v=..."
                 />
               </div>
+              <div>
+                <Label className="text-white text-lg">Kapak Resmi URL</Label>
+                <Input
+                  value={movieForm.kapak_resmi_url}
+                  onChange={(e) => setMovieForm({...movieForm, kapak_resmi_url: e.target.value})}
+                  className="bg-gray-800 border-gray-600 text-white text-lg py-3"
+                  placeholder="https://example.com/cover-image.jpg"
+                />
+              </div>
+              <div>
+                <Label className="text-white text-lg">Arkaplan Resmi URL</Label>
+                <Input
+                  value={movieForm.arkaplan_resmi_url}
+                  onChange={(e) => setMovieForm({...movieForm, arkaplan_resmi_url: e.target.value})}
+                  className="bg-gray-800 border-gray-600 text-white text-lg py-3"
+                  placeholder="https://example.com/background-image.jpg"
+                />
+              </div>
             </div>
+
+            {/* Image Preview Section */}
+            {(movieForm.kapak_resmi_url || movieForm.arkaplan_resmi_url) && (
+              <div className="space-y-4">
+                <div className="flex items-center space-x-2">
+                  <Image className="text-red-400" size={20} />
+                  <h3 className="text-lg font-bold text-white">Resim Önizleme</h3>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {movieForm.kapak_resmi_url && (
+                    <div className="space-y-2">
+                      <Label className="text-white text-sm">Kapak Resmi</Label>
+                      <div className="relative">
+                        <img
+                          src={movieForm.kapak_resmi_url}
+                          alt="Kapak Resmi Önizleme"
+                          className="w-full h-64 object-cover rounded-lg border border-gray-600"
+                          onError={(e) => {
+                            e.target.style.display = 'none';
+                            e.target.nextElementSibling.style.display = 'flex';
+                          }}
+                        />
+                        <div 
+                          className="hidden w-full h-64 bg-gray-800 border border-red-500 rounded-lg items-center justify-center"
+                        >
+                          <div className="text-center text-red-400">
+                            <X size={48} className="mx-auto mb-2 opacity-50" />
+                            <p className="text-sm">Resim yüklenemedi</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  {movieForm.arkaplan_resmi_url && (
+                    <div className="space-y-2">
+                      <Label className="text-white text-sm">Arkaplan Resmi</Label>
+                      <div className="relative">
+                        <img
+                          src={movieForm.arkaplan_resmi_url}
+                          alt="Arkaplan Resmi Önizleme"
+                          className="w-full h-64 object-cover rounded-lg border border-gray-600"
+                          onError={(e) => {
+                            e.target.style.display = 'none';
+                            e.target.nextElementSibling.style.display = 'flex';
+                          }}
+                        />
+                        <div 
+                          className="hidden w-full h-64 bg-gray-800 border border-red-500 rounded-lg items-center justify-center"
+                        >
+                          <div className="text-center text-red-400">
+                            <X size={48} className="mx-auto mb-2 opacity-50" />
+                            <p className="text-sm">Resim yüklenemedi</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
 
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-6">
