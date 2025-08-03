@@ -807,10 +807,18 @@ function ImagePreview({ src, alt, className = "w-full h-48 object-cover rounded-
 
 // Enhanced File Upload Component with Drag & Drop
 function FileUploadSection({ movieId, onUploadComplete, isNewMovie = false }) {
+// Enhanced File Upload Component with Drag & Drop
+function FileUploadSection({ movieId, onUploadComplete, isNewMovie = false }) {
   const [uploading, setUploading] = useState({});
+  const [dragStates, setDragStates] = useState({});
 
   const handleFileUpload = async (type, file) => {
     if (!file) return;
+    
+    if (isNewMovie) {
+      alert('Lütfen önce filmi kaydedin, sonra dosya yükleyebilirsiniz.');
+      return;
+    }
     
     setUploading(prev => ({ ...prev, [type]: true }));
     
@@ -832,42 +840,104 @@ function FileUploadSection({ movieId, onUploadComplete, isNewMovie = false }) {
     }
   };
 
+  const handleDragOver = (e, type) => {
+    e.preventDefault();
+    setDragStates(prev => ({ ...prev, [type]: true }));
+  };
+
+  const handleDragLeave = (e, type) => {
+    e.preventDefault();
+    setDragStates(prev => ({ ...prev, [type]: false }));
+  };
+
+  const handleDrop = (e, type) => {
+    e.preventDefault();
+    setDragStates(prev => ({ ...prev, [type]: false }));
+    const files = e.dataTransfer.files;
+    if (files.length > 0) {
+      handleFileUpload(type, files[0]);
+    }
+  };
+
+  const UploadBox = ({ type, accept, title }) => {
+    const isDragging = dragStates[type];
+    const isUploading = uploading[type];
+    
+    return (
+      <div
+        className={`relative border-2 border-dashed rounded-lg p-6 transition-all duration-300 
+          ${isDragging ? 'border-red-500 bg-red-500/10' : 'border-gray-600 bg-gray-800/50'} 
+          ${isUploading ? 'opacity-50' : 'hover:border-red-400 hover:bg-gray-800/70'}`}
+        onDragOver={(e) => handleDragOver(e, type)}
+        onDragLeave={(e) => handleDragLeave(e, type)}
+        onDrop={(e) => handleDrop(e, type)}
+      >
+        <input
+          type="file"
+          accept={accept}
+          onChange={(e) => handleFileUpload(type, e.target.files[0])}
+          className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+          disabled={isUploading || isNewMovie}
+        />
+        
+        <div className="text-center">
+          {type === 'video' ? (
+            <Video size={32} className={`mx-auto mb-3 ${isDragging ? 'text-red-400' : 'text-gray-400'}`} />
+          ) : (
+            <Image size={32} className={`mx-auto mb-3 ${isDragging ? 'text-red-400' : 'text-gray-400'}`} />
+          )}
+          
+          <h3 className="text-white font-semibold mb-1">{title}</h3>
+          
+          {isUploading ? (
+            <div className="space-y-2">
+              <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-red-500 mx-auto"></div>
+              <p className="text-blue-400 text-sm">Yükleniyor...</p>
+            </div>
+          ) : isNewMovie ? (
+            <p className="text-gray-500 text-sm">Önce filmi kaydedin</p>
+          ) : (
+            <div className="space-y-1">
+              <p className="text-gray-300 text-sm">
+                Dosyayı sürükleyip bırakın veya
+              </p>
+              <p className="text-red-400 text-sm font-medium cursor-pointer hover:text-red-300">
+                Bilgisayardan seçin
+              </p>
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  };
+
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
-      <div>
-        <Label className="text-white mb-2 block">Video Dosyası</Label>
-        <input
-          type="file"
-          accept="video/*"
-          onChange={(e) => handleFileUpload('video', e.target.files[0])}
-          className="w-full text-white bg-gray-800 border border-gray-600 rounded p-2"
-          disabled={uploading.video}
-        />
-        {uploading.video && <p className="text-blue-400 text-sm mt-1">Video yükleniyor...</p>}
+    <div className="space-y-4">
+      <div className="flex items-center justify-between">
+        <h3 className="text-xl font-bold text-white">Dosya Yükleme</h3>
+        {isNewMovie && (
+          <Badge variant="outline" className="border-orange-500 text-orange-400">
+            Filmi önce kaydedin
+          </Badge>
+        )}
       </div>
       
-      <div>
-        <Label className="text-white mb-2 block">Kapak Resmi</Label>
-        <input
-          type="file"
-          accept="image/*"
-          onChange={(e) => handleFileUpload('kapak', e.target.files[0])}
-          className="w-full text-white bg-gray-800 border border-gray-600 rounded p-2"
-          disabled={uploading.kapak}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <UploadBox 
+          type="video" 
+          accept="video/*" 
+          title="Video Dosyası"
         />
-        {uploading.kapak && <p className="text-blue-400 text-sm mt-1">Kapak resmi yükleniyor...</p>}
-      </div>
-      
-      <div>
-        <Label className="text-white mb-2 block">Arkaplan Resmi</Label>
-        <input
-          type="file"
-          accept="image/*"
-          onChange={(e) => handleFileUpload('arkaplan', e.target.files[0])}
-          className="w-full text-white bg-gray-800 border border-gray-600 rounded p-2"
-          disabled={uploading.arkaplan}
+        <UploadBox 
+          type="kapak" 
+          accept="image/*" 
+          title="Kapak Resmi"
         />
-        {uploading.arkaplan && <p className="text-blue-400 text-sm mt-1">Arkaplan resmi yükleniyor...</p>}
+        <UploadBox 
+          type="arkaplan" 
+          accept="image/*" 
+          title="Arkaplan Resmi"
+        />
       </div>
     </div>
   );
