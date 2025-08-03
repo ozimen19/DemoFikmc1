@@ -99,7 +99,7 @@ class UltraCinemaAPITester:
         success, response = self.run_test(
             "Get Movies (Initial)",
             "GET",
-            "/api/movies",
+            "/api/filmler",
             200
         )
         return success
