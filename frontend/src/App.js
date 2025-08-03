@@ -906,6 +906,8 @@ function AdminDashboard() {
       youtube_url: '',
       imdb_url: '',
       fragman_url: '',
+      kapak_resmi_url: '',
+      arkaplan_resmi_url: '',
       ozel: false,
       premium: false,
       yaş_siniri: 'Genel İzleyici'
