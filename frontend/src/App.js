@@ -184,9 +184,11 @@ function VideoPlayer({ movie, onClose }) {
 
 // Movie Card Component
 function MovieCard({ movie, isAdmin = false, onEdit, onDelete, onPlay }) {
-  const kapakSrc = movie.kapak_resmi 
-    ? `${API_BASE}/api/dosyalar/${movie.kapak_resmi}`
-    : `https://via.placeholder.com/400x600/1a1a1a/ffffff?text=${encodeURIComponent(movie.baslik)}`;
+  const kapakSrc = movie.kapak_resmi_url 
+    ? movie.kapak_resmi_url
+    : movie.kapak_resmi 
+      ? `${API_BASE}/api/dosyalar/${movie.kapak_resmi}`
+      : `https://via.placeholder.com/400x600/1a1a1a/ffffff?text=${encodeURIComponent(movie.baslik)}`;
 
   return (
     <Card className="group overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 border-gray-700 hover:border-red-500 transition-all duration-500 transform hover:scale-105 hover:shadow-2xl hover:shadow-red-500/20">
