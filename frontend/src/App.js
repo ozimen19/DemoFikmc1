@@ -1392,6 +1392,58 @@ function AdminDashboard() {
               </div>
             </div>
 
+            {/* Image URL Section - Modern Design */}
+            <div className="space-y-6">
+              <div className="flex items-center space-x-3">
+                <Sparkles className="text-red-400" size={24} />
+                <h3 className="text-xl font-bold text-white">Görsel Bağlantıları</h3>
+              </div>
+              
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {/* Cover Image Section */}
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <Label className="text-white text-lg flex items-center space-x-2">
+                      <Image size={18} className="text-red-400" />
+                      <span>Kapak Resmi URL</span>
+                    </Label>
+                    <Input
+                      value={movieForm.kapak_resmi_url}
+                      onChange={(e) => setMovieForm({...movieForm, kapak_resmi_url: e.target.value})}
+                      className="bg-gray-800 border-gray-600 text-white text-lg py-3"
+                      placeholder="https://example.com/cover-image.jpg"
+                    />
+                  </div>
+                  <ImagePreview 
+                    src={movieForm.kapak_resmi_url} 
+                    alt="Kapak Resmi Önizleme"
+                    className="w-full h-64 object-cover rounded-lg"
+                  />
+                </div>
+
+                {/* Background Image Section */}
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <Label className="text-white text-lg flex items-center space-x-2">
+                      <Image size={18} className="text-red-400" />
+                      <span>Arkaplan Resmi URL</span>
+                    </Label>
+                    <Input
+                      value={movieForm.arkaplan_resmi_url}
+                      onChange={(e) => setMovieForm({...movieForm, arkaplan_resmi_url: e.target.value})}
+                      className="bg-gray-800 border-gray-600 text-white text-lg py-3"
+                      placeholder="https://example.com/background-image.jpg"
+                    />
+                  </div>
+                  <ImagePreview 
+                    src={movieForm.arkaplan_resmi_url} 
+                    alt="Arkaplan Resmi Önizleme"
+                    className="w-full h-64 object-cover rounded-lg"
+                  />
+                </div>
+              </div>
+            </div>
+
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-6">
                 <div className="flex items-center space-x-3">
