@@ -78,9 +78,9 @@ class UltraCinemaAPITester:
         success, _ = self.run_test(
             "Admin Login (Invalid Password)",
             "POST",
-            "/api/admin/login",
+            "/api/admin/giris",
             401,
-            data={"password": "wrong_password"}
+            data={"sifre": "wrong_password"}
         )
         return success
 
