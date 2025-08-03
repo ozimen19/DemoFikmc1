@@ -186,7 +186,7 @@ class UltraCinemaAPITester:
         success, response = self.run_test(
             "Get Featured Movies",
             "GET",
-            "/api/movies?featured_only=true",
+            "/api/filmler?ozel_sadece=true",
             200
         )
         return success
