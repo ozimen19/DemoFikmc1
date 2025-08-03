@@ -366,12 +366,14 @@ def main():
         tester.test_unauthorized_access,
         tester.test_create_movie,
         tester.test_create_second_movie,
+        tester.test_create_movie_with_partial_images,
         tester.test_get_movies_with_data,
         tester.test_get_featured_movies,
         tester.test_get_single_movie,
         tester.test_search_movies,
         tester.test_search_movies_genre,
         tester.test_update_movie,
+        tester.test_update_movie_remove_images,
         tester.test_delete_movie,
     ]
     
