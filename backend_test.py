@@ -63,9 +63,9 @@ class UltraCinemaAPITester:
         success, response = self.run_test(
             "Admin Login (Correct Password)",
             "POST",
-            "/api/admin/login",
+            "/api/admin/giris",
             200,
-            data={"password": "1653"}
+            data={"sifre": "1653"}
         )
         if success and 'access_token' in response:
             self.admin_token = response['access_token']
