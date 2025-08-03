@@ -558,15 +558,16 @@ function HomePage() {
               <Sparkles className="text-red-500 mr-3" size={32} />
               <h2 className="text-4xl font-black">Öne Çıkan Filmler</h2>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-6">
-              {featuredMovies.slice(1).map((movie) => (
-                <MovieCard
-                  key={movie.id}
-                  movie={movie}
-                  onPlay={setSelectedMovie}
-                />
-              ))}
-            </div>
+      {/* Ultra Modern Grid Layout */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6 justify-items-center">
+        {featuredMovies.slice(1).map((movie) => (
+          <MovieCard
+            key={movie.id}
+            movie={movie}
+            onPlay={setSelectedMovie}
+          />
+        ))}
+      </div>
           </div>
         </section>
       )}
