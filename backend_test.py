@@ -165,9 +165,20 @@ class UltraCinemaAPITester:
         success, response = self.run_test(
             "Get Movies (After Creation)",
             "GET",
-            "/api/movies",
+            "/api/filmler",
             200
         )
+        
+        # Verify cover image URLs are returned in the list
+        if success and isinstance(response, list) and len(response) > 0:
+            for movie in response:
+                if movie.get('baslik') == 'Inception':
+                    if 'kapak_resmi_url' in movie and 'arkaplan_resmi_url' in movie:
+                        print(f"   ✅ Cover image URLs found in movie list for Inception")
+                    else:
+                        print(f"   ⚠️ Cover image URLs missing in movie list for Inception")
+                    break
+        
         return success
 
     def test_get_featured_movies(self):
