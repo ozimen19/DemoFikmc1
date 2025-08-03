@@ -105,21 +105,23 @@ class UltraCinemaAPITester:
         return success
 
     def test_create_movie(self):
-        """Test creating a new movie"""
+        """Test creating a new movie with cover image URLs"""
         movie_data = {
-            "title": "Inception",
-            "description": "A thief who steals corporate secrets through dream-sharing technology is given the inverse task of planting an idea into the mind of a CEO.",
-            "genre": "Science Fiction",
-            "release_year": 2010,
-            "rating": 8.8,
+            "baslik": "Inception",
+            "aciklama": "A thief who steals corporate secrets through dream-sharing technology is given the inverse task of planting an idea into the mind of a CEO.",
+            "tur": "Bilim Kurgu",
+            "yil": 2010,
+            "puan": 8.8,
             "video_url": "https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4",
-            "featured": True
+            "kapak_resmi_url": "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg",
+            "arkaplan_resmi_url": "https://images.hdqwalls.com/download/inception-movie-4k-2020-5k-1920x1080.jpg",
+            "ozel": True
         }
         
         success, response = self.run_test(
-            "Create Movie (Inception)",
+            "Create Movie with Cover Images (Inception)",
             "POST",
-            "/api/admin/movies",
+            "/api/admin/filmler",
             200,
             data=movie_data
         )
@@ -127,6 +129,13 @@ class UltraCinemaAPITester:
         if success and 'id' in response:
             self.created_movie_id = response['id']
             print(f"   Created movie ID: {self.created_movie_id}")
+            # Verify cover image URLs are saved
+            if 'kapak_resmi_url' in response and 'arkaplan_resmi_url' in response:
+                print(f"   ✅ Cover image URLs saved correctly")
+                print(f"   Kapak Resmi URL: {response['kapak_resmi_url']}")
+                print(f"   Arkaplan Resmi URL: {response['arkaplan_resmi_url']}")
+            else:
+                print(f"   ⚠️ Cover image URLs not found in response")
             return True
         return False
 
