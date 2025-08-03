@@ -1487,12 +1487,11 @@ function AdminDashboard() {
               </div>
             </div>
 
-            {editingMovie && (
-              <FileUploadSection 
-                movieId={editingMovie.id} 
-                onUploadComplete={fetchMovies}
-              />
-            )}
+            <FileUploadSection 
+              movieId={editingMovie?.id} 
+              onUploadComplete={fetchMovies}
+              isNewMovie={!editingMovie}
+            />
 
             <div className="flex justify-end space-x-4 pt-6 border-t border-gray-700">
               <Button 
