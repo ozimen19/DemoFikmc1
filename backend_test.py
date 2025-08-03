@@ -236,23 +236,38 @@ class UltraCinemaAPITester:
         return success
 
     def test_update_movie(self):
-        """Test updating a movie"""
+        """Test updating a movie with new cover image URLs"""
         if not self.created_movie_id:
             print("⚠️  Skipping movie update test - no movie ID available")
             return True
             
         update_data = {
-            "rating": 9.0,
-            "featured": False
+            "puan": 9.0,
+            "ozel": False,
+            "kapak_resmi_url": "https://m.media-amazon.com/images/M/MV5BNDc0YjM0MjUtZDRhYy00NGM4LWJmMjAtZTJmMzY2OWQ5NDZkXkEyXkFqcGdeQXVyNzI1NzMxNzM@._V1_SX300.jpg",
+            "arkaplan_resmi_url": "https://wallpaperaccess.com/full/1131217.jpg"
         }
         
         success, response = self.run_test(
-            "Update Movie",
+            "Update Movie with New Cover Images",
             "PUT",
-            f"/api/admin/movies/{self.created_movie_id}",
+            f"/api/admin/filmler/{self.created_movie_id}",
             200,
             data=update_data
         )
+        
+        # Verify updated cover image URLs are returned
+        if success and isinstance(response, dict):
+            if response.get('kapak_resmi_url') == update_data['kapak_resmi_url']:
+                print(f"   ✅ Cover image URL updated successfully")
+            else:
+                print(f"   ⚠️ Cover image URL not updated correctly")
+            
+            if response.get('arkaplan_resmi_url') == update_data['arkaplan_resmi_url']:
+                print(f"   ✅ Background image URL updated successfully")
+            else:
+                print(f"   ⚠️ Background image URL not updated correctly")
+        
         return success
 
     def test_unauthorized_access(self):
