@@ -192,17 +192,27 @@ class UltraCinemaAPITester:
         return success
 
     def test_get_single_movie(self):
-        """Test getting a single movie by ID"""
+        """Test getting a single movie by ID and verify cover image URLs"""
         if not self.created_movie_id:
             print("⚠️  Skipping single movie test - no movie ID available")
             return True
             
         success, response = self.run_test(
-            "Get Single Movie",
+            "Get Single Movie with Cover Images",
             "GET",
-            f"/api/movies/{self.created_movie_id}",
+            f"/api/filmler/{self.created_movie_id}",
             200
         )
+        
+        # Verify cover image URLs are returned for individual movie
+        if success and isinstance(response, dict):
+            if 'kapak_resmi_url' in response and 'arkaplan_resmi_url' in response:
+                print(f"   ✅ Cover image URLs found in single movie response")
+                print(f"   Kapak Resmi URL: {response['kapak_resmi_url']}")
+                print(f"   Arkaplan Resmi URL: {response['arkaplan_resmi_url']}")
+            else:
+                print(f"   ⚠️ Cover image URLs missing in single movie response")
+        
         return success
 
     def test_search_movies(self):
