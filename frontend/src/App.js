@@ -298,11 +298,15 @@ function MovieCard({ movie, isAdmin = false, onEdit, onDelete, onPlay }) {
 function HeroSection({ featuredMovie, onPlay }) {
   if (!featuredMovie) return null;
 
-  const arkaplanSrc = featuredMovie.arkaplan_resmi 
-    ? `${API_BASE}/api/dosyalar/${featuredMovie.arkaplan_resmi}`
-    : featuredMovie.kapak_resmi 
-      ? `${API_BASE}/api/dosyalar/${featuredMovie.kapak_resmi}`
-      : `https://via.placeholder.com/1920x1080/1a1a1a/ffffff?text=${encodeURIComponent(featuredMovie.baslik)}`;
+  const arkaplanSrc = featuredMovie.arkaplan_resmi_url 
+    ? featuredMovie.arkaplan_resmi_url
+    : featuredMovie.arkaplan_resmi 
+      ? `${API_BASE}/api/dosyalar/${featuredMovie.arkaplan_resmi}`
+      : featuredMovie.kapak_resmi_url
+        ? featuredMovie.kapak_resmi_url
+        : featuredMovie.kapak_resmi 
+          ? `${API_BASE}/api/dosyalar/${featuredMovie.kapak_resmi}`
+          : `https://via.placeholder.com/1920x1080/1a1a1a/ffffff?text=${encodeURIComponent(featuredMovie.baslik)}`;
 
   return (
     <section className="relative h-[70vh] overflow-hidden">
