@@ -220,7 +220,7 @@ class UltraCinemaAPITester:
         success, response = self.run_test(
             "Search Movies (inception)",
             "GET",
-            "/api/search?q=inception",
+            "/api/ara?q=inception",
             200
         )
         return success
